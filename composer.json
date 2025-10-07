@@ -1,0 +1,68 @@
+{
+    "name": "artflow-studio/scanner",
+    "description": "A comprehensive Laravel vulnerability scanner for detecting security issues in Laravel and Livewire applications",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "livewire",
+        "security",
+        "vulnerability",
+        "scanner",
+        "security-audit",
+        "security-scanner",
+        "static-analysis"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artflow Studio",
+            "email": "support@artflow-studio.com"
+        }
+    ],
+    "require": {
+        "php": "*",
+        "illuminate/support": "*",
+        "illuminate/console": "*",
+        "illuminate/filesystem": "*",
+        "nikic/php-parser": "*",
+        "symfony/finder": "*",
+        "symfony/process": "*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "*",
+        "phpunit/phpunit": "*",
+        "mockery/mockery": "*",
+        "phpstan/phpstan": "*",
+        "laravel/pint": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArtflowStudio\\Scanner\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ArtflowStudio\\Scanner\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ArtflowStudio\\Scanner\\ScannerServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse"
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
