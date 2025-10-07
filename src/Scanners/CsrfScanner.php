@@ -26,7 +26,7 @@ class CsrfScanner extends AbstractScanner
     {
         $scanPaths = $this->getConfig('scan_paths', ['resources/views']);
         $bladeFiles = $this->fileSystem->getBladeFiles($scanPaths, []);
-        
+
         $this->result->setFilesScanned(count($bladeFiles));
 
         foreach ($bladeFiles as $file) {
@@ -37,8 +37,8 @@ class CsrfScanner extends AbstractScanner
                 if (preg_match('/<form[^>]*method\s*=\s*["\']?(post|put|patch|delete)/i', $line)) {
                     // Check if @csrf is present in the next few lines
                     $formBlock = implode("\n", array_slice($lines, $lineNum, 20));
-                    
-                    if (!str_contains($formBlock, '@csrf') && !str_contains($formBlock, 'csrf_token()')) {
+
+                    if (! str_contains($formBlock, '@csrf') && ! str_contains($formBlock, 'csrf_token()')) {
                         $this->addVulnerability(
                             'Form Missing CSRF Protection',
                             VulnerabilitySeverity::HIGH,
@@ -58,13 +58,13 @@ class CsrfScanner extends AbstractScanner
     protected function checkMiddlewareConfiguration(): void
     {
         $middlewarePath = base_path('app/Http/Middleware/VerifyCsrfToken.php');
-        
+
         if (file_exists($middlewarePath)) {
             $content = file_get_contents($middlewarePath);
-            
+
             // Check if $except array has entries
             if (preg_match('/protected\s+\$except\s*=\s*\[(.*?)\]/s', $content, $matches)) {
-                if (!empty(trim($matches[1]))) {
+                if (! empty(trim($matches[1]))) {
                     $this->addVulnerability(
                         'CSRF Protection Disabled for Routes',
                         VulnerabilitySeverity::MEDIUM,

@@ -52,7 +52,7 @@ class SqlInjectionScanner extends AbstractScanner
 
     protected function checkRawQueries(string $file, string $line, int $lineNum): void
     {
-        if (!$this->isConfigEnabled('sql_injection.check_raw_queries')) {
+        if (! $this->isConfigEnabled('sql_injection.check_raw_queries')) {
             return;
         }
 
@@ -61,11 +61,11 @@ class SqlInjectionScanner extends AbstractScanner
                 // Check if using variable concatenation or interpolation
                 if ($this->hasVariableInterpolation($line)) {
                     $severity = $this->determineInjectionSeverity($line);
-                    
+
                     $this->addVulnerability(
                         'Potential SQL Injection via Raw Query',
                         $severity,
-                        "Raw SQL query with variable interpolation detected. This could lead to SQL injection if user input is not properly sanitized.",
+                        'Raw SQL query with variable interpolation detected. This could lead to SQL injection if user input is not properly sanitized.',
                         $file,
                         $lineNum,
                         trim($line),
@@ -125,7 +125,7 @@ class SqlInjectionScanner extends AbstractScanner
         }
 
         // Check for \$_GET, \$_POST, \$_REQUEST usage
-        if (preg_match('/\$_(GET|POST|REQUEST)\s*\[/', $line) && 
+        if (preg_match('/\$_(GET|POST|REQUEST)\s*\[/', $line) &&
             preg_match('/(where|select|DB::)/', $line)) {
             $this->addVulnerability(
                 'Superglobal Used in Database Query',

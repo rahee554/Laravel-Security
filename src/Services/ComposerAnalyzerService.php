@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 class ComposerAnalyzerService
 {
     protected array $composerData = [];
+
     protected array $composerLock = [];
 
     public function __construct()

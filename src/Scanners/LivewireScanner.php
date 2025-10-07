@@ -41,7 +41,7 @@ class LivewireScanner extends AbstractScanner
         }
 
         // Check if it's a Livewire component
-        if (!$this->isLivewireComponent($content)) {
+        if (! $this->isLivewireComponent($content)) {
             return;
         }
 
@@ -61,7 +61,7 @@ class LivewireScanner extends AbstractScanner
 
     protected function checkPublicProperties(string $file, array $ast, string $content): void
     {
-        if (!$this->isConfigEnabled('livewire.check_public_properties')) {
+        if (! $this->isConfigEnabled('livewire.check_public_properties')) {
             return;
         }
 
@@ -70,7 +70,7 @@ class LivewireScanner extends AbstractScanner
 
         foreach ($publicProperties as $property) {
             $propName = $property['name'];
-            
+
             // Check if property name suggests it should be protected
             foreach ($protectedProps as $protected) {
                 if (stripos($propName, $protected) !== false) {
@@ -88,7 +88,7 @@ class LivewireScanner extends AbstractScanner
             }
 
             // Check if property has validation rules
-            if (!$this->hasValidationRules($content, $propName)) {
+            if (! $this->hasValidationRules($content, $propName)) {
                 $this->addVulnerability(
                     'Public Property Without Validation',
                     VulnerabilitySeverity::HIGH,
@@ -96,7 +96,7 @@ class LivewireScanner extends AbstractScanner
                     $file,
                     $property['line'],
                     null,
-                    "Add validation rules in the rules() method or use Wire:model with validation.",
+                    'Add validation rules in the rules() method or use Wire:model with validation.',
                     ['property' => $propName, 'type' => 'missing_validation']
                 );
             }
@@ -106,12 +106,12 @@ class LivewireScanner extends AbstractScanner
     protected function hasValidationRules(string $content, string $property): bool
     {
         // Check if property is mentioned in rules() method
-        if (preg_match("/['\"]" . preg_quote($property, '/') . "['\"]\\s*=>\\s*['\"][^'\"]+['\"/", $content)) {
+        if (preg_match("/['\"]".preg_quote($property, '/')."['\"]\\s*=>\\s*['\"][^'\"]+['\"]/", $content)) {
             return true;
         }
 
         // Check for #[Rule] attribute
-        if (str_contains($content, "#[Rule") && str_contains($content, "public \${$property}")) {
+        if (str_contains($content, '#[Rule') && str_contains($content, "public \${$property}")) {
             return true;
         }
 
@@ -120,27 +120,27 @@ class LivewireScanner extends AbstractScanner
 
     protected function checkMissingValidation(string $file, string $content): void
     {
-        if (!$this->isConfigEnabled('livewire.check_validation')) {
+        if (! $this->isConfigEnabled('livewire.check_validation')) {
             return;
         }
 
         // Find methods that update data but don't call validate()
         $lines = explode("\n", $content);
-        
+
         foreach ($lines as $lineNum => $line) {
             // Look for methods that modify data
             if (preg_match('/public function (save|update|store|create|delete|submit)\s*\(/', $line)) {
                 $methodStartLine = $lineNum + 1;
-                
+
                 // Check if validate() or authorize() is called in the method
                 $methodContent = $this->extractMethodContent($content, $methodStartLine);
-                
-                if (!str_contains($methodContent, '$this->validate(') && 
-                    !str_contains($methodContent, '$this->authorize(')) {
-                    
+
+                if (! str_contains($methodContent, '$this->validate(') &&
+                    ! str_contains($methodContent, '$this->authorize(')) {
+
                     preg_match('/public function (\w+)\s*\(/', $line, $matches);
                     $methodName = $matches[1] ?? 'unknown';
-                    
+
                     $this->addVulnerability(
                         'Method Without Validation or Authorization',
                         VulnerabilitySeverity::HIGH,
@@ -148,7 +148,7 @@ class LivewireScanner extends AbstractScanner
                         $file,
                         $methodStartLine,
                         trim($line),
-                        "Add \$this->validate() or \$this->authorize() before performing data operations.",
+                        'Add $this->validate() or $this->authorize() before performing data operations.',
                         ['method' => $methodName]
                     );
                 }
@@ -158,25 +158,25 @@ class LivewireScanner extends AbstractScanner
 
     protected function checkMissingAuthorization(string $file, string $content): void
     {
-        if (!$this->isConfigEnabled('livewire.check_authorization')) {
+        if (! $this->isConfigEnabled('livewire.check_authorization')) {
             return;
         }
 
         $lines = explode("\n", $content);
-        
+
         foreach ($lines as $lineNum => $line) {
             // Check for methods that should have authorization
             if (preg_match('/public function (delete|destroy|update|edit)\s*\(/', $line)) {
                 $methodStartLine = $lineNum + 1;
                 $methodContent = $this->extractMethodContent($content, $methodStartLine);
-                
-                if (!str_contains($methodContent, '$this->authorize(') &&
-                    !str_contains($methodContent, 'Gate::') &&
-                    !str_contains($methodContent, '->can(')) {
-                    
+
+                if (! str_contains($methodContent, '$this->authorize(') &&
+                    ! str_contains($methodContent, 'Gate::') &&
+                    ! str_contains($methodContent, '->can(')) {
+
                     preg_match('/public function (\w+)\s*\(/', $line, $matches);
                     $methodName = $matches[1] ?? 'unknown';
-                    
+
                     $this->addVulnerability(
                         'Missing Authorization Check',
                         VulnerabilitySeverity::CRITICAL,
@@ -194,17 +194,17 @@ class LivewireScanner extends AbstractScanner
 
     protected function checkMassAssignment(string $file, string $content): void
     {
-        if (!$this->isConfigEnabled('livewire.check_mass_assignment')) {
+        if (! $this->isConfigEnabled('livewire.check_mass_assignment')) {
             return;
         }
 
         $lines = explode("\n", $content);
-        
+
         foreach ($lines as $lineNum => $line) {
             // Look for direct model updates from properties
             if (preg_match('/\$\w+->update\s*\(\s*\$this->all\(\)/', $line) ||
                 preg_match('/\$\w+->fill\s*\(\s*\$this->all\(\)/', $line)) {
-                
+
                 $this->addVulnerability(
                     'Potential Mass Assignment Vulnerability',
                     VulnerabilitySeverity::HIGH,
@@ -221,18 +221,18 @@ class LivewireScanner extends AbstractScanner
 
     protected function checkFileUploadSecurity(string $file, string $content): void
     {
-        if (!str_contains($content, 'WithFileUploads')) {
+        if (! str_contains($content, 'WithFileUploads')) {
             return;
         }
 
         $lines = explode("\n", $content);
-        
+
         foreach ($lines as $lineNum => $line) {
             // Check if file uploads have validation
             if (preg_match('/public \$(\w+);.*\/\*\*.*@var.*UploadedFile/', $line)) {
                 $nextLines = implode("\n", array_slice($lines, $lineNum, 10));
-                
-                if (!str_contains($nextLines, 'mimes:') && !str_contains($nextLines, 'image')) {
+
+                if (! str_contains($nextLines, 'mimes:') && ! str_contains($nextLines, 'image')) {
                     $this->addVulnerability(
                         'File Upload Without MIME Type Validation',
                         VulnerabilitySeverity::HIGH,
@@ -251,22 +251,22 @@ class LivewireScanner extends AbstractScanner
     protected function checkEventListenerSecurity(string $file, array $ast): void
     {
         $content = file_get_contents($file);
-        
+
         // Check for event listeners
         if (preg_match_all('/protected \$listeners\s*=\s*\[(.*?)\]/s', $content, $matches)) {
             foreach ($matches[1] as $listenerBlock) {
                 // Parse listener methods
                 preg_match_all('/[\'"](\w+)[\'"]/', $listenerBlock, $methods);
-                
+
                 foreach ($methods[1] as $method) {
                     // Check if the method has authorization
                     if (preg_match("/public function {$method}\s*\(/", $content, $methodMatch, PREG_OFFSET_CAPTURE)) {
                         $position = $methodMatch[0][1];
                         $lineNum = substr_count(substr($content, 0, $position), "\n") + 1;
-                        
+
                         $methodContent = $this->extractMethodContent($content, $lineNum);
-                        
-                        if (!str_contains($methodContent, 'authorize')) {
+
+                        if (! str_contains($methodContent, 'authorize')) {
                             $this->addVulnerability(
                                 'Event Listener Without Authorization',
                                 VulnerabilitySeverity::MEDIUM,
@@ -274,7 +274,7 @@ class LivewireScanner extends AbstractScanner
                                 $file,
                                 $lineNum,
                                 null,
-                                "Add authorization checks within the listener method.",
+                                'Add authorization checks within the listener method.',
                                 ['method' => $method, 'type' => 'event_listener']
                             );
                         }
@@ -294,7 +294,7 @@ class LivewireScanner extends AbstractScanner
 
         for ($i = $startIdx; $i < count($lines); $i++) {
             $line = $lines[$i];
-            $methodContent .= $line . "\n";
+            $methodContent .= $line."\n";
 
             $braceCount += substr_count($line, '{') - substr_count($line, '}');
 

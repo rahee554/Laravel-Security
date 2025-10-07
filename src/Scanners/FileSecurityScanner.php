@@ -6,9 +6,16 @@ use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
 
 class FileSecurityScanner extends AbstractScanner
 {
-    public function getName(): string { return 'File Security Scanner'; }
-    public function getDescription(): string { return 'Checks file upload and file operation security'; }
-    
+    public function getName(): string
+    {
+        return 'File Security Scanner';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Checks file upload and file operation security';
+    }
+
     protected function execute(): void
     {
         $files = $this->getFilesToScan();

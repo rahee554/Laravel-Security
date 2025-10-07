@@ -28,6 +28,7 @@ class JsonReport implements ReportGeneratorInterface
     public function save(array $results, string $path): bool
     {
         $content = $this->generate($results);
+
         return file_put_contents($path, $content) !== false;
     }
 

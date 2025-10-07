@@ -6,9 +6,16 @@ use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
 
 class ConfigurationScanner extends AbstractScanner
 {
-    public function getName(): string { return 'Configuration Scanner'; }
-    public function getDescription(): string { return 'Checks application configuration for security issues'; }
-    
+    public function getName(): string
+    {
+        return 'Configuration Scanner';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Checks application configuration for security issues';
+    }
+
     protected function execute(): void
     {
         $this->checkAppKey();
@@ -20,7 +27,7 @@ class ConfigurationScanner extends AbstractScanner
         $envPath = base_path('.env');
         if (file_exists($envPath)) {
             $content = file_get_contents($envPath);
-            if (str_contains($content, 'APP_KEY=') && !preg_match('/APP_KEY=base64:[A-Za-z0-9+\/=]{40,}/', $content)) {
+            if (str_contains($content, 'APP_KEY=') && ! preg_match('/APP_KEY=base64:[A-Za-z0-9+\/=]{40,}/', $content)) {
                 $this->addVulnerability(
                     'Missing or Invalid APP_KEY',
                     VulnerabilitySeverity::CRITICAL,

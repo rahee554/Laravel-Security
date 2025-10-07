@@ -2,27 +2,31 @@
 
 namespace ArtflowStudio\Scanner\Scanners;
 
+use ArtflowStudio\Scanner\Analyzers\CodeAnalyzer;
 use ArtflowStudio\Scanner\Contracts\ScannerInterface;
 use ArtflowStudio\Scanner\DTOs\ScanResult;
 use ArtflowStudio\Scanner\DTOs\Vulnerability;
 use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
-use ArtflowStudio\Scanner\Services\FileSystemService;
 use ArtflowStudio\Scanner\Services\ComposerAnalyzerService;
-use ArtflowStudio\Scanner\Analyzers\CodeAnalyzer;
+use ArtflowStudio\Scanner\Services\FileSystemService;
 
 abstract class AbstractScanner implements ScannerInterface
 {
     protected FileSystemService $fileSystem;
+
     protected ComposerAnalyzerService $composer;
+
     protected CodeAnalyzer $codeAnalyzer;
+
     protected ScanResult $result;
+
     protected float $startTime;
 
     public function __construct()
     {
-        $this->fileSystem = new FileSystemService();
-        $this->composer = new ComposerAnalyzerService();
-        $this->codeAnalyzer = new CodeAnalyzer();
+        $this->fileSystem = new FileSystemService;
+        $this->composer = new ComposerAnalyzerService;
+        $this->codeAnalyzer = new CodeAnalyzer;
     }
 
     /**

@@ -2,12 +2,12 @@
 
 namespace ArtflowStudio\Scanner\Commands;
 
-use Illuminate\Console\Command;
-use ArtflowStudio\Scanner\Services\ScannerService;
 use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Reports\JsonReport;
 use ArtflowStudio\Scanner\Reports\HtmlReport;
+use ArtflowStudio\Scanner\Reports\JsonReport;
 use ArtflowStudio\Scanner\Reports\MarkdownReport;
+use ArtflowStudio\Scanner\Services\ScannerService;
+use Illuminate\Console\Command;
 
 class ScanCommand extends Command
 {
@@ -24,9 +24,10 @@ class ScanCommand extends Command
         $this->displayBanner();
 
         $scanners = $this->selectScanners($scannerService);
-        
+
         if (empty($scanners)) {
             $this->error('No scanners selected.');
+
             return self::FAILURE;
         }
 
@@ -38,11 +39,11 @@ class ScanCommand extends Command
 
         foreach ($scanners as $scannerName) {
             $scanner = $scannerService->getScanner($scannerName);
-            
+
             if ($scanner->isApplicable()) {
                 $results[$scannerName] = $scanner->scan();
             }
-            
+
             $progressBar->advance();
         }
 
@@ -72,34 +73,61 @@ class ScanCommand extends Command
             return $scannerService->getAvailableScanners();
         }
 
-        if (!empty($this->option('scanners'))) {
+        if (! empty($this->option('scanners'))) {
             return $this->option('scanners');
         }
 
-        // Interactive selection
+        // Interactive selection with numbered menu
         $availableScanners = $scannerService->getAvailableScanners();
-        $choices = array_merge(['all' => 'All Scanners'], $availableScanners);
 
-        $selected = $this->choice(
-            'Which scanners would you like to run?',
-            $choices,
-            'all',
-            null,
-            true
-        );
+        $this->info('📋 Available Security Scanners:');
+        $this->newLine();
 
-        if (in_array('all', $selected) || in_array('All Scanners', $selected)) {
+        // Display menu with numbers
+        $this->line('  [0] 🔍 All Scanners (Comprehensive Scan)');
+        $index = 1;
+        $scannerMap = [];
+
+        foreach ($availableScanners as $key) {
+            $displayName = ucwords(str_replace('-', ' ', $key));
+            $this->line("  [{$index}] 🛡️  {$displayName}");
+            $scannerMap[$index] = $key;
+            $index++;
+        }
+
+        $this->newLine();
+
+        $selection = $this->ask('Enter scanner number to run (0 for all)', '0');
+
+        // Validate input
+        if (! is_numeric($selection)) {
+            $this->error('Invalid selection. Please enter a number.');
+
+            return $this->selectScanners($scannerService);
+        }
+
+        $selection = (int) $selection;
+
+        // Return all scanners if 0 selected
+        if ($selection === 0) {
             return $availableScanners;
         }
 
-        return $selected;
+        // Return selected scanner
+        if (isset($scannerMap[$selection])) {
+            return [$scannerMap[$selection]];
+        }
+
+        $this->error('Invalid selection. Please try again.');
+
+        return $this->selectScanners($scannerService);
     }
 
     protected function displayResults(array $results): void
     {
-        $report = new ConsoleReport();
+        $report = new ConsoleReport;
         $output = $report->generate($results);
-        
+
         $this->line($output);
     }
 
@@ -108,11 +136,11 @@ class ScanCommand extends Command
         $format = $this->option('format');
         $outputPath = $this->option('output');
 
-        $generator = match($format) {
-            'json' => new JsonReport(),
-            'html' => new HtmlReport(),
-            'markdown' => new MarkdownReport(),
-            default => new ConsoleReport(),
+        $generator = match ($format) {
+            'json' => new JsonReport,
+            'html' => new HtmlReport,
+            'markdown' => new MarkdownReport,
+            default => new ConsoleReport,
         };
 
         if ($generator->save($results, $outputPath)) {

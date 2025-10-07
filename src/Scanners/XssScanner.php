@@ -23,7 +23,7 @@ class XssScanner extends AbstractScanner
 
         // Scan Blade files
         $bladeFiles = $this->fileSystem->getBladeFiles($scanPaths, $excludePaths);
-        
+
         // Scan PHP files for echo/print statements
         $phpFiles = $this->fileSystem->getPhpFiles($scanPaths, $excludePaths);
 
@@ -63,7 +63,7 @@ class XssScanner extends AbstractScanner
 
     protected function checkRawOutput(string $file, string $line, int $lineNum): void
     {
-        if (!$this->isConfigEnabled('xss.check_blade_raw_output')) {
+        if (! $this->isConfigEnabled('xss.check_blade_raw_output')) {
             return;
         }
 
@@ -98,7 +98,7 @@ class XssScanner extends AbstractScanner
 
     protected function checkJavaScriptInjection(string $file, string $line, int $lineNum): void
     {
-        if (!$this->isConfigEnabled('xss.check_javascript_injection')) {
+        if (! $this->isConfigEnabled('xss.check_javascript_injection')) {
             return;
         }
 
@@ -133,14 +133,14 @@ class XssScanner extends AbstractScanner
 
     protected function checkUrlInjection(string $file, string $line, int $lineNum): void
     {
-        if (!$this->isConfigEnabled('xss.check_url_injection')) {
+        if (! $this->isConfigEnabled('xss.check_url_injection')) {
             return;
         }
 
         // Check for unescaped URLs
         if (preg_match('/href\s*=\s*["\']?\{\{\s*\$/', $line) ||
             preg_match('/src\s*=\s*["\']?\{\{\s*\$/', $line)) {
-            
+
             $this->addVulnerability(
                 'Potential URL Injection',
                 VulnerabilitySeverity::MEDIUM,
@@ -204,7 +204,7 @@ class XssScanner extends AbstractScanner
         // Check for echo/print with Request data
         if (preg_match('/(echo|print)\s+.*?\$request->/', $line) ||
             preg_match('/(echo|print)\s+.*?Request::/', $line)) {
-            
+
             $this->addVulnerability(
                 'Direct Echo of Request Data',
                 VulnerabilitySeverity::HIGH,

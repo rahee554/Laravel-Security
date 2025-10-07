@@ -6,9 +6,16 @@ use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
 
 class AuthorizationScanner extends AbstractScanner
 {
-    public function getName(): string { return 'Authorization Scanner'; }
-    public function getDescription(): string { return 'Checks for proper authorization in controllers and routes'; }
-    
+    public function getName(): string
+    {
+        return 'Authorization Scanner';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Checks for proper authorization in controllers and routes';
+    }
+
     protected function execute(): void
     {
         $controllers = $this->fileSystem->getControllerFiles();
@@ -27,14 +34,14 @@ class AuthorizationScanner extends AbstractScanner
         foreach ($lines as $lineNum => $line) {
             if (preg_match('/public function (update|destroy|delete|edit)\s*\(/', $line)) {
                 $methodContent = $this->getMethodBlock($lines, $lineNum);
-                
-                if (!str_contains($methodContent, '$this->authorize') && 
-                    !str_contains($methodContent, 'Gate::') &&
-                    !str_contains($methodContent, '->can(')) {
-                    
+
+                if (! str_contains($methodContent, '$this->authorize') &&
+                    ! str_contains($methodContent, 'Gate::') &&
+                    ! str_contains($methodContent, '->can(')) {
+
                     preg_match('/public function (\w+)/', $line, $matches);
                     $method = $matches[1] ?? 'unknown';
-                    
+
                     $this->addVulnerability(
                         'Missing Authorization Check',
                         VulnerabilitySeverity::HIGH,
@@ -57,8 +64,11 @@ class AuthorizationScanner extends AbstractScanner
         for ($i = $startIdx; $i < count($lines) && $i < $startIdx + 30; $i++) {
             $content .= $lines[$i];
             $braceCount += substr_count($lines[$i], '{') - substr_count($lines[$i], '}');
-            if ($braceCount === 0 && str_contains($lines[$i], '}')) break;
+            if ($braceCount === 0 && str_contains($lines[$i], '}')) {
+                break;
+            }
         }
+
         return $content;
     }
 }

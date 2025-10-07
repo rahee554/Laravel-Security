@@ -11,21 +11,22 @@ class HtmlReport implements ReportGeneratorInterface
     {
         $html = $this->generateHeader();
         $html .= $this->generateSummary($results);
-        
+
         foreach ($results as $scannerName => $result) {
             if ($result instanceof ScanResult) {
                 $html .= $this->generateScannerSection($result);
             }
         }
-        
+
         $html .= $this->generateFooter();
-        
+
         return $html;
     }
 
     public function save(array $results, string $path): bool
     {
         $content = $this->generate($results);
+
         return file_put_contents($path, $content) !== false;
     }
 
@@ -132,18 +133,18 @@ HTML;
         <div class="scanner-section">
             <div class="scanner-header">
                 <h2 style="margin: 0;">{$result->getScannerName()}</h2>
-                <p style="margin: 5px 0 0 0; opacity: 0.9;">{$result->getDescription()}</p>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">{$result->getScannerDescription()}</p>
             </div>
             <div>
 HTML;
 
-        if (!$result->hasVulnerabilities()) {
+        if (! $result->hasVulnerabilities()) {
             $html .= '<div class="vulnerability" style="color: #38c172; font-weight: bold;">✅ No vulnerabilities found</div>';
         } else {
             foreach ($result->getVulnerabilities() as $vulnerability) {
                 $severityClass = "badge-{$vulnerability->severity->value}";
                 $severity = strtoupper($vulnerability->severity->value);
-                
+
                 $html .= <<<HTML
                 <div class="vulnerability">
                     <div class="vulnerability-title">
@@ -153,27 +154,27 @@ HTML;
                     <div class="vulnerability-meta">📁 {$vulnerability->getLocation()}</div>
                     <div class="vulnerability-meta">{$vulnerability->description}</div>
 HTML;
-                
+
                 if ($vulnerability->code) {
-                    $html .= "<div class=\"vulnerability-meta\"><code>" . htmlspecialchars($vulnerability->code) . "</code></div>";
+                    $html .= '<div class="vulnerability-meta"><code>'.htmlspecialchars($vulnerability->code).'</code></div>';
                 }
-                
+
                 if ($vulnerability->recommendation) {
                     $html .= "<div class=\"recommendation\">💡 <strong>Recommendation:</strong> {$vulnerability->recommendation}</div>";
                 }
-                
-                $html .= "</div>";
+
+                $html .= '</div>';
             }
         }
 
-        $html .= "</div></div>";
-        
+        $html .= '</div></div>';
+
         return $html;
     }
 
     protected function generateFooter(): string
     {
-        return <<<HTML
+        return <<<'HTML'
     </div>
 </body>
 </html>

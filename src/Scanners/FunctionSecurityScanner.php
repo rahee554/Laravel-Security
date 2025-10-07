@@ -8,7 +8,7 @@ class FunctionSecurityScanner extends AbstractScanner
 {
     protected array $dangerousFunctions = [
         'eval', 'exec', 'system', 'shell_exec', 'passthru',
-        'proc_open', 'popen', 'unserialize', 'assert', 'create_function'
+        'proc_open', 'popen', 'unserialize', 'assert', 'create_function',
     ];
 
     public function getName(): string
@@ -40,7 +40,7 @@ class FunctionSecurityScanner extends AbstractScanner
             foreach ($this->dangerousFunctions as $function) {
                 if (preg_match("/\\b{$function}\\s*\(/", $line)) {
                     $severity = $this->determineSeverity($function, $line);
-                    
+
                     $this->addVulnerability(
                         "Dangerous Function: {$function}()",
                         $severity,
@@ -59,7 +59,7 @@ class FunctionSecurityScanner extends AbstractScanner
     protected function determineSeverity(string $function, string $line): VulnerabilitySeverity
     {
         $criticalFunctions = ['eval', 'system', 'exec', 'shell_exec'];
-        
+
         if (in_array($function, $criticalFunctions)) {
             return VulnerabilitySeverity::CRITICAL;
         }
@@ -69,7 +69,7 @@ class FunctionSecurityScanner extends AbstractScanner
 
     protected function getRecommendation(string $function): string
     {
-        return match($function) {
+        return match ($function) {
             'eval' => 'Never use eval(). Refactor code to eliminate the need for dynamic code execution.',
             'unserialize' => 'Use JSON instead of serialize/unserialize, or validate data before unserializing.',
             'exec', 'system', 'shell_exec' => 'Avoid shell commands. If necessary, use Symfony Process component with strict input validation.',

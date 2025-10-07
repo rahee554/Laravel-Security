@@ -27,15 +27,15 @@ class DataExposureScanner extends AbstractScanner
 
     protected function checkDebugMode(): void
     {
-        if (!$this->isConfigEnabled('data_exposure.check_debug_mode')) {
+        if (! $this->isConfigEnabled('data_exposure.check_debug_mode')) {
             return;
         }
 
         $envPath = base_path('.env');
-        
+
         if (file_exists($envPath)) {
             $envContent = file_get_contents($envPath);
-            
+
             if (preg_match('/^APP_DEBUG\s*=\s*true/m', $envContent)) {
                 $this->addVulnerability(
                     'Debug Mode Enabled',
@@ -54,17 +54,17 @@ class DataExposureScanner extends AbstractScanner
     protected function checkEnvironmentFile(): void
     {
         $envPath = base_path('.env');
-        
+
         if (file_exists($envPath)) {
             $envContent = file_get_contents($envPath);
             $lines = explode("\n", $envContent);
-            
+
             foreach ($lines as $lineNum => $line) {
                 // Check for hardcoded secrets
-                if (preg_match('/(PASSWORD|SECRET|KEY|TOKEN).*=.*[\'"]?[\w\-]{8,}/', $line) && 
-                    !str_contains($line, 'null') &&
-                    !str_contains($line, 'your-')) {
-                    
+                if (preg_match('/(PASSWORD|SECRET|KEY|TOKEN).*=.*[\'"]?[\w\-]{8,}/', $line) &&
+                    ! str_contains($line, 'null') &&
+                    ! str_contains($line, 'your-')) {
+
                     // This is expected in .env, but check if it looks like default
                     if (str_contains($line, 'password') || str_contains($line, '123456')) {
                         $this->addVulnerability(
@@ -86,7 +86,7 @@ class DataExposureScanner extends AbstractScanner
         $envExamplePath = base_path('.env.example');
         if (file_exists($envExamplePath)) {
             $content = file_get_contents($envExamplePath);
-            
+
             if (preg_match('/(SECRET|TOKEN|PASSWORD).*=.{20,}/', $content)) {
                 $this->addVulnerability(
                     'Potential Secrets in .env.example',
@@ -106,7 +106,7 @@ class DataExposureScanner extends AbstractScanner
     {
         $files = $this->getFilesToScan();
         $sensitiveKeywords = $this->getConfig('data_exposure.sensitive_keywords', [
-            'password', 'secret', 'token', 'api_key'
+            'password', 'secret', 'token', 'api_key',
         ]);
 
         foreach ($files as $file) {
@@ -143,9 +143,9 @@ class DataExposureScanner extends AbstractScanner
             $content = file_get_contents($file);
 
             // Check if model has $hidden property
-            if (!preg_match('/protected\s+\$hidden\s*=/', $content) &&
-                !preg_match('/protected\s+\$visible\s*=/', $content)) {
-                
+            if (! preg_match('/protected\s+\$hidden\s*=/', $content) &&
+                ! preg_match('/protected\s+\$visible\s*=/', $content)) {
+
                 // Check if model has sensitive-looking fields
                 if (preg_match('/(password|token|secret|api_key|private_key)/i', $content)) {
                     $this->addVulnerability(
@@ -165,7 +165,7 @@ class DataExposureScanner extends AbstractScanner
 
     protected function checkApiResponseLeakage(): void
     {
-        if (!$this->isConfigEnabled('data_exposure.check_api_responses')) {
+        if (! $this->isConfigEnabled('data_exposure.check_api_responses')) {
             return;
         }
 
@@ -179,7 +179,7 @@ class DataExposureScanner extends AbstractScanner
                 // Check for returning entire models in API responses
                 if (preg_match('/return\s+.*?User::all\(\)|->all\(\)|->get\(\)/', $line) &&
                     str_contains($content, 'namespace App\Http\Controllers\Api')) {
-                    
+
                     $this->addVulnerability(
                         'Potential API Response Data Leakage',
                         VulnerabilitySeverity::MEDIUM,

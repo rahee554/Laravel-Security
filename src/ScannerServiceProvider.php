@@ -2,15 +2,20 @@
 
 namespace ArtflowStudio\Scanner;
 
-use Illuminate\Support\ServiceProvider;
-use ArtflowStudio\Scanner\Commands\ScanCommand;
-use ArtflowStudio\Scanner\Commands\ScanLivewireCommand;
-use ArtflowStudio\Scanner\Commands\ScanRateLimitCommand;
-use ArtflowStudio\Scanner\Commands\ScanSecurityCommand;
-use ArtflowStudio\Scanner\Commands\ScanDependenciesCommand;
-use ArtflowStudio\Scanner\Commands\ScanConfigurationCommand;
-use ArtflowStudio\Scanner\Commands\ScanAuthenticationCommand;
 use ArtflowStudio\Scanner\Commands\GenerateReportCommand;
+use ArtflowStudio\Scanner\Commands\ScanAuthenticationCommand;
+use ArtflowStudio\Scanner\Commands\ScanCommand;
+use ArtflowStudio\Scanner\Commands\ScanConfigurationCommand;
+use ArtflowStudio\Scanner\Commands\ScanCorsCommand;
+use ArtflowStudio\Scanner\Commands\ScanDependenciesCommand;
+use ArtflowStudio\Scanner\Commands\ScanFixCommand;
+use ArtflowStudio\Scanner\Commands\ScanLivewireCommand;
+use ArtflowStudio\Scanner\Commands\ScanPerformanceCommand;
+use ArtflowStudio\Scanner\Commands\ScanRateLimitCommand;
+use ArtflowStudio\Scanner\Commands\ScanRouteCommand;
+use ArtflowStudio\Scanner\Commands\ScanSecurityCommand;
+use ArtflowStudio\Scanner\Commands\ScanVendorCommand;
+use Illuminate\Support\ServiceProvider;
 
 class ScannerServiceProvider extends ServiceProvider
 {
@@ -25,6 +30,10 @@ class ScannerServiceProvider extends ServiceProvider
 
         $this->app->singleton('scanner', function ($app) {
             return new Services\ScannerService($app);
+        });
+
+        $this->app->singleton('scanner.fixer', function ($app) {
+            return new Services\FixerService;
         });
     }
 
@@ -48,7 +57,12 @@ class ScannerServiceProvider extends ServiceProvider
                 ScanDependenciesCommand::class,
                 ScanConfigurationCommand::class,
                 ScanAuthenticationCommand::class,
+                ScanCorsCommand::class,
+                ScanRouteCommand::class,
+                ScanVendorCommand::class,
+                ScanPerformanceCommand::class,
                 GenerateReportCommand::class,
+                ScanFixCommand::class,
             ]);
         }
     }

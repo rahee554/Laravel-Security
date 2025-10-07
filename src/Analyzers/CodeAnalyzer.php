@@ -2,11 +2,11 @@
 
 namespace ArtflowStudio\Scanner\Analyzers;
 
-use PhpParser\Parser;
-use PhpParser\ParserFactory;
+use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
-use PhpParser\Node;
+use PhpParser\Parser;
+use PhpParser\ParserFactory;
 
 class CodeAnalyzer
 {
@@ -14,7 +14,7 @@ class CodeAnalyzer
 
     public function __construct()
     {
-        $this->parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+        $this->parser = (new ParserFactory)->createForNewestSupportedVersion();
     }
 
     /**
@@ -24,6 +24,7 @@ class CodeAnalyzer
     {
         try {
             $code = file_get_contents($filePath);
+
             return $this->parser->parse($code);
         } catch (\Exception $e) {
             return null;
@@ -48,11 +49,13 @@ class CodeAnalyzer
     public function findFunctionCalls(array $ast, array $functionNames): array
     {
         $results = [];
-        
-        $visitor = new class($functionNames, $results) implements NodeVisitor {
+
+        $visitor = new class($functionNames, $results) implements NodeVisitor
+        {
             public function __construct(private array $functionNames, private array &$results) {}
-            
-            public function enterNode(Node $node) {
+
+            public function enterNode(Node $node)
+            {
                 if ($node instanceof Node\Expr\FuncCall) {
                     if ($node->name instanceof Node\Name) {
                         $name = $node->name->toString();
@@ -66,13 +69,15 @@ class CodeAnalyzer
                     }
                 }
             }
-            
+
             public function leaveNode(Node $node) {}
+
             public function beforeTraverse(array $nodes) {}
+
             public function afterTraverse(array $nodes) {}
         };
 
-        $traverser = new NodeTraverser();
+        $traverser = new NodeTraverser;
         $traverser->addVisitor($visitor);
         $traverser->traverse($ast);
 
@@ -85,11 +90,13 @@ class CodeAnalyzer
     public function findMethodCalls(array $ast, array $methodNames): array
     {
         $results = [];
-        
-        $visitor = new class($methodNames, $results) implements NodeVisitor {
+
+        $visitor = new class($methodNames, $results) implements NodeVisitor
+        {
             public function __construct(private array $methodNames, private array &$results) {}
-            
-            public function enterNode(Node $node) {
+
+            public function enterNode(Node $node)
+            {
                 if ($node instanceof Node\Expr\MethodCall || $node instanceof Node\Expr\StaticCall) {
                     if ($node->name instanceof Node\Identifier) {
                         $name = $node->name->toString();
@@ -102,13 +109,15 @@ class CodeAnalyzer
                     }
                 }
             }
-            
+
             public function leaveNode(Node $node) {}
+
             public function beforeTraverse(array $nodes) {}
+
             public function afterTraverse(array $nodes) {}
         };
 
-        $traverser = new NodeTraverser();
+        $traverser = new NodeTraverser;
         $traverser->addVisitor($visitor);
         $traverser->traverse($ast);
 
@@ -121,11 +130,13 @@ class CodeAnalyzer
     public function findPublicProperties(array $ast): array
     {
         $results = [];
-        
-        $visitor = new class($results) implements NodeVisitor {
+
+        $visitor = new class($results) implements NodeVisitor
+        {
             public function __construct(private array &$results) {}
-            
-            public function enterNode(Node $node) {
+
+            public function enterNode(Node $node)
+            {
                 if ($node instanceof Node\Stmt\Property) {
                     if ($node->isPublic()) {
                         foreach ($node->props as $prop) {
@@ -137,13 +148,15 @@ class CodeAnalyzer
                     }
                 }
             }
-            
+
             public function leaveNode(Node $node) {}
+
             public function beforeTraverse(array $nodes) {}
+
             public function afterTraverse(array $nodes) {}
         };
 
-        $traverser = new NodeTraverser();
+        $traverser = new NodeTraverser;
         $traverser->addVisitor($visitor);
         $traverser->traverse($ast);
 
@@ -156,11 +169,13 @@ class CodeAnalyzer
     public function findMethods(array $ast): array
     {
         $results = [];
-        
-        $visitor = new class($results) implements NodeVisitor {
+
+        $visitor = new class($results) implements NodeVisitor
+        {
             public function __construct(private array &$results) {}
-            
-            public function enterNode(Node $node) {
+
+            public function enterNode(Node $node)
+            {
                 if ($node instanceof Node\Stmt\ClassMethod) {
                     $this->results[] = [
                         'name' => $node->name->toString(),
@@ -171,13 +186,15 @@ class CodeAnalyzer
                     ];
                 }
             }
-            
+
             public function leaveNode(Node $node) {}
+
             public function beforeTraverse(array $nodes) {}
+
             public function afterTraverse(array $nodes) {}
         };
 
-        $traverser = new NodeTraverser();
+        $traverser = new NodeTraverser;
         $traverser->addVisitor($visitor);
         $traverser->traverse($ast);
 
@@ -196,7 +213,7 @@ class CodeAnalyzer
                 }
             }
         }
-        
+
         return false;
     }
 
@@ -210,7 +227,7 @@ class CodeAnalyzer
                 return $node->name ? $node->name->toString() : null;
             }
         }
-        
+
         return null;
     }
 }

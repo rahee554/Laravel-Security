@@ -6,9 +6,16 @@ use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
 
 class AuthenticationScanner extends AbstractScanner
 {
-    public function getName(): string { return 'Authentication Scanner'; }
-    public function getDescription(): string { return 'Checks authentication configuration and password security'; }
-    
+    public function getName(): string
+    {
+        return 'Authentication Scanner';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Checks authentication configuration and password security';
+    }
+
     protected function execute(): void
     {
         $this->checkPasswordValidation();
@@ -26,7 +33,7 @@ class AuthenticationScanner extends AbstractScanner
         foreach ($files as $file) {
             $content = file_get_contents($file);
             if (str_contains($content, 'password') && str_contains($content, 'rules')) {
-                if (!preg_match('/password.*min:\d+/', $content)) {
+                if (! preg_match('/password.*min:\d+/', $content)) {
                     $this->addVulnerability(
                         'Weak Password Requirements',
                         VulnerabilitySeverity::MEDIUM,
@@ -47,7 +54,7 @@ class AuthenticationScanner extends AbstractScanner
         $sessionPath = base_path('config/session.php');
         if (file_exists($sessionPath)) {
             $content = file_get_contents($sessionPath);
-            if (!str_contains($content, "'secure' => true") && !str_contains($content, "'secure' => env(")) {
+            if (! str_contains($content, "'secure' => true") && ! str_contains($content, "'secure' => env(")) {
                 $this->addVulnerability(
                     'Session Cookies Not Secure',
                     VulnerabilitySeverity::MEDIUM,

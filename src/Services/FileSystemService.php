@@ -13,15 +13,15 @@ class FileSystemService
     public function getPhpFiles(array $paths, array $excludePaths = []): array
     {
         $files = [];
-        
+
         foreach ($paths as $path) {
             $fullPath = base_path($path);
-            
-            if (!File::exists($fullPath)) {
+
+            if (! File::exists($fullPath)) {
                 continue;
             }
 
-            $finder = new Finder();
+            $finder = new Finder;
             $finder->files()
                 ->in($fullPath)
                 ->name('*.php')
@@ -45,15 +45,15 @@ class FileSystemService
     public function getBladeFiles(array $paths, array $excludePaths = []): array
     {
         $files = [];
-        
+
         foreach ($paths as $path) {
             $fullPath = base_path($path);
-            
-            if (!File::exists($fullPath)) {
+
+            if (! File::exists($fullPath)) {
                 continue;
             }
 
-            $finder = new Finder();
+            $finder = new Finder;
             $finder->files()
                 ->in($fullPath)
                 ->name('*.blade.php')
@@ -84,11 +84,11 @@ class FileSystemService
         $files = [];
 
         foreach ($paths as $path) {
-            if (!File::exists($path)) {
+            if (! File::exists($path)) {
                 continue;
             }
 
-            $finder = new Finder();
+            $finder = new Finder;
             $finder->files()
                 ->in($path)
                 ->name('*.php')
@@ -109,11 +109,11 @@ class FileSystemService
     {
         $path = base_path('app/Models');
 
-        if (!File::exists($path)) {
+        if (! File::exists($path)) {
             return [];
         }
 
-        $finder = new Finder();
+        $finder = new Finder;
         $finder->files()
             ->in($path)
             ->name('*.php')
@@ -134,11 +134,11 @@ class FileSystemService
     {
         $path = base_path('app/Http/Controllers');
 
-        if (!File::exists($path)) {
+        if (! File::exists($path)) {
             return [];
         }
 
-        $finder = new Finder();
+        $finder = new Finder;
         $finder->files()
             ->in($path)
             ->name('*.php')
@@ -173,6 +173,33 @@ class FileSystemService
      */
     public function getRelativePath(string $path): string
     {
-        return str_replace(base_path() . DIRECTORY_SEPARATOR, '', $path);
+        return str_replace(base_path().DIRECTORY_SEPARATOR, '', $path);
+    }
+
+    /**
+     * Get all files in a given path (generic method)
+     */
+    public function getFiles(string $path, string $pattern = '*.php'): array
+    {
+        if (! File::exists($path)) {
+            return [];
+        }
+
+        if (! File::isDirectory($path)) {
+            return [$path];
+        }
+
+        $finder = new Finder;
+        $finder->files()
+            ->in($path)
+            ->name($pattern)
+            ->ignoreDotFiles(true);
+
+        $files = [];
+        foreach ($finder as $file) {
+            $files[] = $file->getRealPath();
+        }
+
+        return $files;
     }
 }

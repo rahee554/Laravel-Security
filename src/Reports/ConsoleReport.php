@@ -10,23 +10,24 @@ class ConsoleReport implements ReportGeneratorInterface
     public function generate(array $results): string
     {
         $output = [];
-        
+
         $output[] = $this->generateHeader();
-        
+
         foreach ($results as $scannerName => $result) {
             if ($result instanceof ScanResult) {
                 $output[] = $this->generateScannerSection($result);
             }
         }
-        
+
         $output[] = $this->generateSummary($results);
-        
+
         return implode("\n", $output);
     }
 
     public function save(array $results, string $path): bool
     {
         $content = $this->generate($results);
+
         return file_put_contents($path, strip_tags($content)) !== false;
     }
 
@@ -37,7 +38,7 @@ class ConsoleReport implements ReportGeneratorInterface
 
     protected function generateHeader(): string
     {
-        return <<<HEADER
+        return <<<'HEADER'
 ╔══════════════════════════════════════════════════════════════╗
 ║        Artflow Vulnerability Scanner v1.0.0                  ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -48,43 +49,77 @@ HEADER;
     protected function generateScannerSection(ScanResult $result): string
     {
         $output = [];
-        
+
         $output[] = "\n🔍 {$result->getScannerName()}";
-        $output[] = str_repeat("━", 70);
-        $output[] = "{$result->getDescription()}\n";
-        
-        if (!$result->hasVulnerabilities()) {
+        $output[] = str_repeat('━', 70);
+        $output[] = "{$result->getScannerDescription()}\n";
+
+        if (! $result->hasVulnerabilities()) {
             $output[] = "✅ No vulnerabilities found\n";
+
             return implode("\n", $output);
         }
 
-        $output[] = "Found {$result->getTotalCount()} issue(s):\n";
-        
+        // Get breakdown by type if available
+        $typeBreakdown = $this->getTypeBreakdown($result->getVulnerabilities());
+
+        $output[] = "Found {$result->getTotalCount()} issue(s):";
+
+        // Show type breakdown if there are multiple types
+        if (count($typeBreakdown) > 1) {
+            $output[] = "\n📊 Issue Types:";
+            foreach ($typeBreakdown as $type => $count) {
+                $output[] = "   • {$type}: {$count}";
+            }
+        }
+
+        $output[] = '';
+
         foreach ($result->getVulnerabilities() as $vulnerability) {
             $output[] = $this->formatVulnerability($vulnerability);
         }
-        
+
         return implode("\n", $output);
+    }
+
+    protected function getTypeBreakdown(array $vulnerabilities): array
+    {
+        $breakdown = [];
+
+        foreach ($vulnerabilities as $vulnerability) {
+            $type = $vulnerability->metadata['type'] ?? 'general';
+            $typeName = ucwords(str_replace('_', ' ', $type));
+
+            if (! isset($breakdown[$typeName])) {
+                $breakdown[$typeName] = 0;
+            }
+
+            $breakdown[$typeName]++;
+        }
+
+        arsort($breakdown);
+
+        return $breakdown;
     }
 
     protected function formatVulnerability($vulnerability): string
     {
         $emoji = $vulnerability->severity->getEmoji();
         $severity = strtoupper($vulnerability->severity->value);
-        
+
         $output = [];
         $output[] = "\n{$emoji} [{$severity}] {$vulnerability->title}";
         $output[] = "  📁 File: {$vulnerability->getLocation()}";
         $output[] = "  📝 Issue: {$vulnerability->description}";
-        
+
         if ($vulnerability->code) {
             $output[] = "  💻 Code: {$vulnerability->code}";
         }
-        
+
         if ($vulnerability->recommendation) {
             $output[] = "  💡 Fix: {$vulnerability->recommendation}";
         }
-        
+
         return implode("\n", $output);
     }
 

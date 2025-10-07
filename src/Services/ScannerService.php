@@ -2,22 +2,26 @@
 
 namespace ArtflowStudio\Scanner\Services;
 
-use Illuminate\Foundation\Application;
-use ArtflowStudio\Scanner\Scanners\LivewireScanner;
-use ArtflowStudio\Scanner\Scanners\RateLimitScanner;
-use ArtflowStudio\Scanner\Scanners\FunctionSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\DataExposureScanner;
-use ArtflowStudio\Scanner\Scanners\ConsoleSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\AuthenticationScanner;
-use ArtflowStudio\Scanner\Scanners\AuthorizationScanner;
-use ArtflowStudio\Scanner\Scanners\DependencyScanner;
-use ArtflowStudio\Scanner\Scanners\ConfigurationScanner;
-use ArtflowStudio\Scanner\Scanners\XssScanner;
-use ArtflowStudio\Scanner\Scanners\SqlInjectionScanner;
-use ArtflowStudio\Scanner\Scanners\FileSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\CsrfScanner;
 use ArtflowStudio\Scanner\Contracts\ScannerInterface;
 use ArtflowStudio\Scanner\Exceptions\ScannerException;
+use ArtflowStudio\Scanner\Scanners\AuthenticationScanner;
+use ArtflowStudio\Scanner\Scanners\AuthorizationScanner;
+use ArtflowStudio\Scanner\Scanners\ConfigurationScanner;
+use ArtflowStudio\Scanner\Scanners\ConsoleSecurityScanner;
+use ArtflowStudio\Scanner\Scanners\CorsScanner;
+use ArtflowStudio\Scanner\Scanners\CsrfScanner;
+use ArtflowStudio\Scanner\Scanners\DataExposureScanner;
+use ArtflowStudio\Scanner\Scanners\DependencyScanner;
+use ArtflowStudio\Scanner\Scanners\FileSecurityScanner;
+use ArtflowStudio\Scanner\Scanners\FunctionSecurityScanner;
+use ArtflowStudio\Scanner\Scanners\LivewireScanner;
+use ArtflowStudio\Scanner\Scanners\PerformanceScanner;
+use ArtflowStudio\Scanner\Scanners\RateLimitScanner;
+use ArtflowStudio\Scanner\Scanners\RouteSecurityScanner;
+use ArtflowStudio\Scanner\Scanners\SqlInjectionScanner;
+use ArtflowStudio\Scanner\Scanners\VendorScanner;
+use ArtflowStudio\Scanner\Scanners\XssScanner;
+use Illuminate\Foundation\Application;
 
 class ScannerService
 {
@@ -47,6 +51,10 @@ class ScannerService
             'sql-injection' => SqlInjectionScanner::class,
             'file-security' => FileSecurityScanner::class,
             'csrf' => CsrfScanner::class,
+            'cors' => CorsScanner::class,
+            'route-security' => RouteSecurityScanner::class,
+            'vendor' => VendorScanner::class,
+            'performance' => PerformanceScanner::class,
         ];
     }
 
@@ -63,7 +71,7 @@ class ScannerService
      */
     public function getScanner(string $name): ScannerInterface
     {
-        if (!isset($this->scanners[$name])) {
+        if (! isset($this->scanners[$name])) {
             throw ScannerException::scannerNotFound($name);
         }
 
@@ -101,7 +109,7 @@ class ScannerService
 
         foreach ($scannerNames as $name) {
             $scanner = $this->getScanner($name);
-            
+
             if ($scanner->isApplicable()) {
                 $results[$name] = $scanner->scan();
             }

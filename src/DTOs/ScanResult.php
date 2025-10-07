@@ -8,7 +8,9 @@ class ScanResult
     protected array $vulnerabilities = [];
 
     protected int $filesScanned = 0;
+
     protected float $scanTime = 0;
+
     protected array $metadata = [];
 
     public function __construct(
@@ -22,6 +24,7 @@ class ScanResult
     public function addVulnerability(Vulnerability $vulnerability): self
     {
         $this->vulnerabilities[] = $vulnerability;
+
         return $this;
     }
 
@@ -33,6 +36,7 @@ class ScanResult
         foreach ($vulnerabilities as $vulnerability) {
             $this->addVulnerability($vulnerability);
         }
+
         return $this;
     }
 
@@ -51,7 +55,7 @@ class ScanResult
     {
         return array_filter(
             $this->vulnerabilities,
-            fn($v) => $v->severity === $severity
+            fn ($v) => $v->severity === $severity
         );
     }
 
@@ -97,6 +101,7 @@ class ScanResult
     public function setFilesScanned(int $count): self
     {
         $this->filesScanned = $count;
+
         return $this;
     }
 
@@ -114,6 +119,7 @@ class ScanResult
     public function setScanTime(float $time): self
     {
         $this->scanTime = $time;
+
         return $this;
     }
 
@@ -131,6 +137,7 @@ class ScanResult
     public function setMetadata(array $metadata): self
     {
         $this->metadata = $metadata;
+
         return $this;
     }
 
@@ -163,7 +170,7 @@ class ScanResult
      */
     public function sortBySeverity(): self
     {
-        usort($this->vulnerabilities, function($a, $b) {
+        usort($this->vulnerabilities, function ($a, $b) {
             return $b->severity->getPriority() <=> $a->severity->getPriority();
         });
 
@@ -183,7 +190,7 @@ class ScanResult
             'files_scanned' => $this->filesScanned,
             'scan_time' => $this->scanTime,
             'vulnerabilities' => array_map(
-                fn($v) => $v->toArray(),
+                fn ($v) => $v->toArray(),
                 $this->vulnerabilities
             ),
             'metadata' => $this->metadata,

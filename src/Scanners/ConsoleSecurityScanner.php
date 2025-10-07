@@ -6,14 +6,21 @@ use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
 
 class ConsoleSecurityScanner extends AbstractScanner
 {
-    public function getName(): string { return 'Console Security Scanner'; }
-    public function getDescription(): string { return 'Checks Artisan commands for security vulnerabilities'; }
-    
+    public function getName(): string
+    {
+        return 'Console Security Scanner';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Checks Artisan commands for security vulnerabilities';
+    }
+
     protected function execute(): void
     {
         $commandPath = base_path('app/Console/Commands');
-        
-        if (!is_dir($commandPath)) {
+
+        if (! is_dir($commandPath)) {
             return;
         }
 
@@ -28,10 +35,10 @@ class ConsoleSecurityScanner extends AbstractScanner
     protected function scanCommand(string $file): void
     {
         $content = file_get_contents($file);
-        
+
         if (str_contains($content, 'extends Command')) {
             $lines = explode("\n", $content);
-            
+
             foreach ($lines as $lineNum => $line) {
                 if (preg_match('/(exec|shell_exec|system)\s*\(/', $line)) {
                     $this->addVulnerability(

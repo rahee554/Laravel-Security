@@ -2,10 +2,10 @@
 
 namespace ArtflowStudio\Scanner\Tests\Unit;
 
-use ArtflowStudio\Scanner\Tests\TestCase;
 use ArtflowStudio\Scanner\DTOs\ScanResult;
 use ArtflowStudio\Scanner\DTOs\Vulnerability;
 use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
+use ArtflowStudio\Scanner\Tests\TestCase;
 
 class ScanResultTest extends TestCase
 {

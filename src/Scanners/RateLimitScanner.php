@@ -26,7 +26,7 @@ class RateLimitScanner extends AbstractScanner
 
     protected function checkRouteRateLimiting(): void
     {
-        if (!$this->isConfigEnabled('rate_limit.check_routes')) {
+        if (! $this->isConfigEnabled('rate_limit.check_routes')) {
             return;
         }
 
@@ -39,26 +39,26 @@ class RateLimitScanner extends AbstractScanner
             $methods = $route->methods();
 
             // Skip GET requests to non-sensitive endpoints
-            if (in_array('GET', $methods) && !$this->isSensitiveEndpoint($uri)) {
+            if (in_array('GET', $methods) && ! $this->isSensitiveEndpoint($uri)) {
                 continue;
             }
 
             // Check if throttle middleware is applied
-            if (!$this->hasThrottleMiddleware($middleware)) {
+            if (! $this->hasThrottleMiddleware($middleware)) {
                 $severity = $this->determineSeverity($uri, $methods);
-                
+
                 $this->addVulnerability(
                     'Route Without Rate Limiting',
                     $severity,
                     "Route '{$uri}' lacks rate limiting. This can be exploited for brute-force or DoS attacks.",
                     $route->getActionName(),
                     null,
-                    implode(', ', $methods) . ' ' . $uri,
+                    implode(', ', $methods).' '.$uri,
                     "Add throttle middleware: Route::middleware(['throttle:60,1'])->...",
                     [
                         'uri' => $uri,
                         'methods' => $methods,
-                        'type' => 'missing_throttle'
+                        'type' => 'missing_throttle',
                     ]
                 );
             }
@@ -67,7 +67,7 @@ class RateLimitScanner extends AbstractScanner
 
     protected function checkApiRateLimiting(): void
     {
-        if (!$this->isConfigEnabled('rate_limit.check_api_routes')) {
+        if (! $this->isConfigEnabled('rate_limit.check_api_routes')) {
             return;
         }
 
@@ -75,19 +75,19 @@ class RateLimitScanner extends AbstractScanner
 
         foreach ($routes as $route) {
             $uri = $route->uri();
-            
+
             // Check API routes
             if (str_starts_with($uri, 'api/')) {
                 $middleware = $route->middleware();
-                
-                if (!$this->hasThrottleMiddleware($middleware)) {
+
+                if (! $this->hasThrottleMiddleware($middleware)) {
                     $this->addVulnerability(
                         'API Route Without Rate Limiting',
                         VulnerabilitySeverity::HIGH,
                         "API route '{$uri}' lacks rate limiting. APIs are common targets for abuse.",
                         $route->getActionName(),
                         null,
-                        implode(', ', $route->methods()) . ' ' . $uri,
+                        implode(', ', $route->methods()).' '.$uri,
                         "Apply rate limiting: Route::middleware(['throttle:api'])->...",
                         ['uri' => $uri, 'type' => 'api_throttle']
                     );
@@ -98,7 +98,7 @@ class RateLimitScanner extends AbstractScanner
 
     protected function checkAuthenticationRateLimiting(): void
     {
-        if (!$this->isConfigEnabled('rate_limit.check_auth_routes')) {
+        if (! $this->isConfigEnabled('rate_limit.check_auth_routes')) {
             return;
         }
 
@@ -113,19 +113,19 @@ class RateLimitScanner extends AbstractScanner
 
         foreach ($routes as $route) {
             $uri = $route->uri();
-            
+
             foreach ($authPatterns as $pattern) {
                 if (str_contains($uri, trim($pattern, '/'))) {
                     $middleware = $route->middleware();
-                    
-                    if (!$this->hasThrottleMiddleware($middleware)) {
+
+                    if (! $this->hasThrottleMiddleware($middleware)) {
                         $this->addVulnerability(
                             'Authentication Route Without Rate Limiting',
                             VulnerabilitySeverity::CRITICAL,
                             "Authentication route '{$uri}' lacks rate limiting. This allows brute-force attacks on user accounts.",
                             $route->getActionName(),
                             null,
-                            implode(', ', $route->methods()) . ' ' . $uri,
+                            implode(', ', $route->methods()).' '.$uri,
                             "Add strict rate limiting: Route::middleware(['throttle:5,1'])->... for login attempts",
                             ['uri' => $uri, 'type' => 'auth_throttle']
                         );
@@ -176,6 +176,7 @@ class RateLimitScanner extends AbstractScanner
             if ($this->isSensitiveEndpoint($uri)) {
                 return VulnerabilitySeverity::CRITICAL;
             }
+
             return VulnerabilitySeverity::HIGH;
         }
 

@@ -6,9 +6,16 @@ use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
 
 class DependencyScanner extends AbstractScanner
 {
-    public function getName(): string { return 'Dependency Scanner'; }
-    public function getDescription(): string { return 'Checks for outdated and vulnerable dependencies'; }
-    
+    public function getName(): string
+    {
+        return 'Dependency Scanner';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Checks for outdated and vulnerable dependencies';
+    }
+
     protected function execute(): void
     {
         $packages = $this->composer->getInstalledPackages();

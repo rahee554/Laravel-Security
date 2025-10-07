@@ -2,8 +2,6 @@
 
 namespace ArtflowStudio\Scanner\Contracts;
 
-use ArtflowStudio\Scanner\DTOs\ScanResult;
-
 interface ReportGeneratorInterface
 {
     /**

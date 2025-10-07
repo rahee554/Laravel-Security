@@ -10,23 +10,24 @@ class MarkdownReport implements ReportGeneratorInterface
     public function generate(array $results): string
     {
         $md = "# 🔒 Security Vulnerability Scan Report\n\n";
-        $md .= "**Generated:** " . date('Y-m-d H:i:s') . "\n\n";
+        $md .= '**Generated:** '.date('Y-m-d H:i:s')."\n\n";
         $md .= "---\n\n";
         $md .= $this->generateSummary($results);
         $md .= "\n---\n\n";
-        
+
         foreach ($results as $scannerName => $result) {
             if ($result instanceof ScanResult) {
                 $md .= $this->generateScannerSection($result);
             }
         }
-        
+
         return $md;
     }
 
     public function save(array $results, string $path): bool
     {
         $content = $this->generate($results);
+
         return file_put_contents($path, $content) !== false;
     }
 
@@ -71,34 +72,35 @@ MD;
     protected function generateScannerSection(ScanResult $result): string
     {
         $md = "## 🔍 {$result->getScannerName()}\n\n";
-        $md .= "*{$result->getDescription()}*\n\n";
-        
-        if (!$result->hasVulnerabilities()) {
+        $md .= "*{$result->getScannerDescription()}*\n\n";
+
+        if (! $result->hasVulnerabilities()) {
             $md .= "✅ **No vulnerabilities found**\n\n";
+
             return $md;
         }
 
         $md .= "**Found {$result->getTotalCount()} issue(s):**\n\n";
-        
+
         foreach ($result->getVulnerabilities() as $vulnerability) {
             $emoji = $vulnerability->severity->getEmoji();
             $severity = strtoupper($vulnerability->severity->value);
-            
+
             $md .= "### {$emoji} [{$severity}] {$vulnerability->title}\n\n";
             $md .= "- **File:** `{$vulnerability->getLocation()}`\n";
             $md .= "- **Issue:** {$vulnerability->description}\n";
-            
+
             if ($vulnerability->code) {
                 $md .= "- **Code:**\n  ```php\n  {$vulnerability->code}\n  ```\n";
             }
-            
+
             if ($vulnerability->recommendation) {
                 $md .= "- **💡 Recommendation:** {$vulnerability->recommendation}\n";
             }
-            
+
             $md .= "\n";
         }
-        
+
         return $md;
     }
 }
