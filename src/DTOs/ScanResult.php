@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtflowStudio\Scanner\DTOs;
+namespace ArtflowStudio\LaravelSecurity\DTOs;
 
 class ScanResult
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Contracts;
+namespace ArtflowStudio\LaravelSecurity\Contracts;
 
-use ArtflowStudio\Scanner\DTOs\ScanResult;
+use ArtflowStudio\LaravelSecurity\DTOs\ScanResult;
 
 interface ScannerInterface
 {

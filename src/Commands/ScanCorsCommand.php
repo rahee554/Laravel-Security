@@ -1,9 +1,9 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Scanners\CorsScanner;
+use ArtflowStudio\LaravelSecurity\Reports\ConsoleReport;
+use ArtflowStudio\LaravelSecurity\Scanners\CorsScanner;
 use Illuminate\Console\Command;
 
 class ScanCorsCommand extends Command

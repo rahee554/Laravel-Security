@@ -1,9 +1,9 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Scanners\AuthenticationScanner;
+use ArtflowStudio\LaravelSecurity\Reports\ConsoleReport;
+use ArtflowStudio\LaravelSecurity\Scanners\AuthenticationScanner;
 use Illuminate\Console\Command;
 
 class ScanAuthenticationCommand extends Command

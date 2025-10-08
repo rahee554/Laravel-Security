@@ -1,9 +1,9 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Scanners\LivewireScanner;
+use ArtflowStudio\LaravelSecurity\Reports\ConsoleReport;
+use ArtflowStudio\LaravelSecurity\Scanners\LivewireScanner;
 use Illuminate\Console\Command;
 
 class ScanLivewireCommand extends Command

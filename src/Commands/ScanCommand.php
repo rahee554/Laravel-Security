@@ -1,12 +1,12 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Reports\HtmlReport;
-use ArtflowStudio\Scanner\Reports\JsonReport;
-use ArtflowStudio\Scanner\Reports\MarkdownReport;
-use ArtflowStudio\Scanner\Services\ScannerService;
+use ArtflowStudio\LaravelSecurity\Reports\ConsoleReport;
+use ArtflowStudio\LaravelSecurity\Reports\HtmlReport;
+use ArtflowStudio\LaravelSecurity\Reports\JsonReport;
+use ArtflowStudio\LaravelSecurity\Reports\MarkdownReport;
+use ArtflowStudio\LaravelSecurity\Services\ScannerService;
 use Illuminate\Console\Command;
 
 class ScanCommand extends Command

@@ -1,9 +1,9 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Scanners\RouteSecurityScanner;
+use ArtflowStudio\LaravelSecurity\Reports\ConsoleReport;
+use ArtflowStudio\LaravelSecurity\Scanners\RouteSecurityScanner;
 use Illuminate\Console\Command;
 
 class ScanRouteCommand extends Command

@@ -1,9 +1,9 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Reports;
+namespace ArtflowStudio\LaravelSecurity\Reports;
 
-use ArtflowStudio\Scanner\Contracts\ReportGeneratorInterface;
-use ArtflowStudio\Scanner\DTOs\ScanResult;
+use ArtflowStudio\LaravelSecurity\Contracts\ReportGeneratorInterface;
+use ArtflowStudio\LaravelSecurity\DTOs\ScanResult;
 
 class JsonReport implements ReportGeneratorInterface
 {

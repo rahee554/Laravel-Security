@@ -1,9 +1,9 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Scanners\PerformanceScanner;
+use ArtflowStudio\LaravelSecurity\Reports\ConsoleReport;
+use ArtflowStudio\LaravelSecurity\Scanners\PerformanceScanner;
 use Illuminate\Console\Command;
 
 class ScanPerformanceCommand extends Command

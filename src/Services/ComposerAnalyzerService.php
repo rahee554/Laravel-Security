@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Services;
+namespace ArtflowStudio\LaravelSecurity\Services;
 
 use Illuminate\Support\Facades\File;
 

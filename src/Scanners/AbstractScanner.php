@@ -1,14 +1,14 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Scanners;
+namespace ArtflowStudio\LaravelSecurity\Scanners;
 
-use ArtflowStudio\Scanner\Analyzers\CodeAnalyzer;
-use ArtflowStudio\Scanner\Contracts\ScannerInterface;
-use ArtflowStudio\Scanner\DTOs\ScanResult;
-use ArtflowStudio\Scanner\DTOs\Vulnerability;
-use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
-use ArtflowStudio\Scanner\Services\ComposerAnalyzerService;
-use ArtflowStudio\Scanner\Services\FileSystemService;
+use ArtflowStudio\LaravelSecurity\Analyzers\CodeAnalyzer;
+use ArtflowStudio\LaravelSecurity\Contracts\ScannerInterface;
+use ArtflowStudio\LaravelSecurity\DTOs\ScanResult;
+use ArtflowStudio\LaravelSecurity\DTOs\Vulnerability;
+use ArtflowStudio\LaravelSecurity\DTOs\VulnerabilitySeverity;
+use ArtflowStudio\LaravelSecurity\Services\ComposerAnalyzerService;
+use ArtflowStudio\LaravelSecurity\Services\FileSystemService;
 
 abstract class AbstractScanner implements ScannerInterface
 {

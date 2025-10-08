@@ -1,8 +1,8 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Tests;
+namespace ArtflowStudio\LaravelSecurity\Tests;
 
-use ArtflowStudio\Scanner\ScannerServiceProvider;
+use ArtflowStudio\LaravelSecurity\ScannerServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra

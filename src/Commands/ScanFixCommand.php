@@ -1,9 +1,9 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Services\FixerService;
-use ArtflowStudio\Scanner\Services\ScannerService;
+use ArtflowStudio\LaravelSecurity\Services\FixerService;
+use ArtflowStudio\LaravelSecurity\Services\ScannerService;
 use Illuminate\Console\Command;
 
 class ScanFixCommand extends Command

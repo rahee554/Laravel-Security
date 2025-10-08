@@ -1,8 +1,8 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Scanners;
+namespace ArtflowStudio\LaravelSecurity\Scanners;
 
-use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
+use ArtflowStudio\LaravelSecurity\DTOs\VulnerabilitySeverity;
 
 class ConsoleSecurityScanner extends AbstractScanner
 {

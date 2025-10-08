@@ -1,26 +1,26 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Services;
+namespace ArtflowStudio\LaravelSecurity\Services;
 
-use ArtflowStudio\Scanner\Contracts\ScannerInterface;
-use ArtflowStudio\Scanner\Exceptions\ScannerException;
-use ArtflowStudio\Scanner\Scanners\AuthenticationScanner;
-use ArtflowStudio\Scanner\Scanners\AuthorizationScanner;
-use ArtflowStudio\Scanner\Scanners\ConfigurationScanner;
-use ArtflowStudio\Scanner\Scanners\ConsoleSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\CorsScanner;
-use ArtflowStudio\Scanner\Scanners\CsrfScanner;
-use ArtflowStudio\Scanner\Scanners\DataExposureScanner;
-use ArtflowStudio\Scanner\Scanners\DependencyScanner;
-use ArtflowStudio\Scanner\Scanners\FileSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\FunctionSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\LivewireScanner;
-use ArtflowStudio\Scanner\Scanners\PerformanceScanner;
-use ArtflowStudio\Scanner\Scanners\RateLimitScanner;
-use ArtflowStudio\Scanner\Scanners\RouteSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\SqlInjectionScanner;
-use ArtflowStudio\Scanner\Scanners\VendorScanner;
-use ArtflowStudio\Scanner\Scanners\XssScanner;
+use ArtflowStudio\LaravelSecurity\Contracts\ScannerInterface;
+use ArtflowStudio\LaravelSecurity\Exceptions\ScannerException;
+use ArtflowStudio\LaravelSecurity\Scanners\AuthenticationScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\AuthorizationScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\ConfigurationScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\ConsoleSecurityScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\CorsScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\CsrfScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\DataExposureScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\DependencyScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\FileSecurityScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\FunctionSecurityScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\LivewireScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\PerformanceScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\RateLimitScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\RouteSecurityScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\SqlInjectionScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\VendorScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\XssScanner;
 use Illuminate\Foundation\Application;
 
 class ScannerService

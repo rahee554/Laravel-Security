@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Analyzers;
+namespace ArtflowStudio\LaravelSecurity\Analyzers;
 
 use PhpParser\Node;
 use PhpParser\NodeTraverser;

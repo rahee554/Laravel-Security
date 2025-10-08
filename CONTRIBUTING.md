@@ -29,7 +29,7 @@ Want to add a new security scanner? Great! Here's how:
 
 1. **Create the Scanner Class**
    ```php
-   namespace ArtflowStudio\Scanner\Scanners;
+   namespace ArtflowStudio\LaravelSecurity\Scanners;
    
    class YourScanner extends AbstractScanner
    {

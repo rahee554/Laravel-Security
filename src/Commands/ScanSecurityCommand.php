@@ -1,12 +1,12 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Commands;
+namespace ArtflowStudio\LaravelSecurity\Commands;
 
-use ArtflowStudio\Scanner\Reports\ConsoleReport;
-use ArtflowStudio\Scanner\Scanners\CsrfScanner;
-use ArtflowStudio\Scanner\Scanners\FunctionSecurityScanner;
-use ArtflowStudio\Scanner\Scanners\SqlInjectionScanner;
-use ArtflowStudio\Scanner\Scanners\XssScanner;
+use ArtflowStudio\LaravelSecurity\Reports\ConsoleReport;
+use ArtflowStudio\LaravelSecurity\Scanners\CsrfScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\FunctionSecurityScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\SqlInjectionScanner;
+use ArtflowStudio\LaravelSecurity\Scanners\XssScanner;
 use Illuminate\Console\Command;
 
 class ScanSecurityCommand extends Command

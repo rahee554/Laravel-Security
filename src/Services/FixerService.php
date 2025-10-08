@@ -1,12 +1,12 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Services;
+namespace ArtflowStudio\LaravelSecurity\Services;
 
-use ArtflowStudio\Scanner\DTOs\ScanResult;
-use ArtflowStudio\Scanner\Fixers\CsrfFixerStrategy;
-use ArtflowStudio\Scanner\Fixers\LivewireFixerStrategy;
-use ArtflowStudio\Scanner\Fixers\SqlInjectionFixerStrategy;
-use ArtflowStudio\Scanner\Fixers\XssFixerStrategy;
+use ArtflowStudio\LaravelSecurity\DTOs\ScanResult;
+use ArtflowStudio\LaravelSecurity\Fixers\CsrfFixerStrategy;
+use ArtflowStudio\LaravelSecurity\Fixers\LivewireFixerStrategy;
+use ArtflowStudio\LaravelSecurity\Fixers\SqlInjectionFixerStrategy;
+use ArtflowStudio\LaravelSecurity\Fixers\XssFixerStrategy;
 use Illuminate\Support\Facades\File;
 
 class FixerService

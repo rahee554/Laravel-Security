@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Contracts;
+namespace ArtflowStudio\LaravelSecurity\Contracts;
 
 interface ReportGeneratorInterface
 {

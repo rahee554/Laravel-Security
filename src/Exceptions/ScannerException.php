@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Exceptions;
+namespace ArtflowStudio\LaravelSecurity\Exceptions;
 
 use Exception;
 

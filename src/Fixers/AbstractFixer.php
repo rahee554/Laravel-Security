@@ -1,8 +1,8 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Fixers;
+namespace ArtflowStudio\LaravelSecurity\Fixers;
 
-use ArtflowStudio\Scanner\Contracts\FixerStrategyInterface;
+use ArtflowStudio\LaravelSecurity\Contracts\FixerStrategyInterface;
 use Illuminate\Support\Facades\File;
 
 abstract class AbstractFixer implements FixerStrategyInterface

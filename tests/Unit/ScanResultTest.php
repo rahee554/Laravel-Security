@@ -1,11 +1,11 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Tests\Unit;
+namespace ArtflowStudio\LaravelSecurity\Tests\Unit;
 
-use ArtflowStudio\Scanner\DTOs\ScanResult;
-use ArtflowStudio\Scanner\DTOs\Vulnerability;
-use ArtflowStudio\Scanner\DTOs\VulnerabilitySeverity;
-use ArtflowStudio\Scanner\Tests\TestCase;
+use ArtflowStudio\LaravelSecurity\DTOs\ScanResult;
+use ArtflowStudio\LaravelSecurity\DTOs\Vulnerability;
+use ArtflowStudio\LaravelSecurity\DTOs\VulnerabilitySeverity;
+use ArtflowStudio\LaravelSecurity\Tests\TestCase;
 
 class ScanResultTest extends TestCase
 {

@@ -1,23 +1,23 @@
 <?php
 
-namespace ArtflowStudio\Scanner;
+namespace ArtflowStudio\LaravelSecurity;
 
-use ArtflowStudio\Scanner\Commands\GenerateReportCommand;
-use ArtflowStudio\Scanner\Commands\ScanAuthenticationCommand;
-use ArtflowStudio\Scanner\Commands\ScanCommand;
-use ArtflowStudio\Scanner\Commands\ScanConfigurationCommand;
-use ArtflowStudio\Scanner\Commands\ScanCorsCommand;
-use ArtflowStudio\Scanner\Commands\ScanDependenciesCommand;
-use ArtflowStudio\Scanner\Commands\ScanFixCommand;
-use ArtflowStudio\Scanner\Commands\ScanLivewireCommand;
-use ArtflowStudio\Scanner\Commands\ScanPerformanceCommand;
-use ArtflowStudio\Scanner\Commands\ScanRateLimitCommand;
-use ArtflowStudio\Scanner\Commands\ScanRouteCommand;
-use ArtflowStudio\Scanner\Commands\ScanSecurityCommand;
-use ArtflowStudio\Scanner\Commands\ScanVendorCommand;
+use ArtflowStudio\LaravelSecurity\Commands\GenerateReportCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanAuthenticationCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanConfigurationCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanCorsCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanDependenciesCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanFixCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanLivewireCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanPerformanceCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanRateLimitCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanRouteCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanSecurityCommand;
+use ArtflowStudio\LaravelSecurity\Commands\ScanVendorCommand;
 use Illuminate\Support\ServiceProvider;
 
-class ScannerServiceProvider extends ServiceProvider
+class LaravelSecurityServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

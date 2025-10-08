@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtflowStudio\Scanner\Fixers;
+namespace ArtflowStudio\LaravelSecurity\Fixers;
 
 class CsrfFixerStrategy extends AbstractFixer
 {
