@@ -1,22 +1,23 @@
 {
     "name": "artflow-studio/laravel-security",
-    "description": "A comprehensive Laravel vulnerability scanner for detecting security issues in Laravel and Livewire applications",
+    "description": "Laravel package that scans applications (including Livewire) for security vulnerabilities, reports issues with severity levels, and provides remediation guidance and optional automated fixes.",
     "type": "library",
     "keywords": [
         "laravel",
         "livewire",
-        "security",
-        "vulnerability",
-        "scanner",
+        "laravel-security",
+        "vulnerability-scanner",
         "security-audit",
-        "security-scanner",
-        "static-analysis"
+        "static-analysis",
+        "code-scanner",
+        "remediation",
+        "secure-coding",
+        "security-tooling"
     ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Artflow Studio",
-            "email": "support@artflow-studio.com"
+            "name": "Artflow Studio"
         }
     ],
     "require": {
@@ -37,18 +38,18 @@
     },
     "autoload": {
         "psr-4": {
-            "ArtflowStudio\\Scanner\\": "src/"
+            "ArtflowStudio\\LaravelSecurity\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ArtflowStudio\\Scanner\\Tests\\": "tests/"
+            "ArtflowStudio\\LaravelSecurity\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "ArtflowStudio\\Scanner\\LaravelSecurityServiceProvider"
+                "ArtflowStudio\\LaravelSecurity\\LaravelSecurityServiceProvider"
             ]
         }
     },
