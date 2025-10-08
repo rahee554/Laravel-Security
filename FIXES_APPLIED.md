@@ -1,7 +1,7 @@
 # Scanner Package - Fixes Applied
 
 ## Summary
-All scanners in the **artflow-studio/scanner** package have been tested and fixed. The package is now fully functional and ready for use.
+All scanners in the **artflow-studio/laravel-security** package have been tested and fixed. The package is now fully functional and ready for use.
 
 ## Date: October 7, 2025
 
@@ -15,7 +15,7 @@ All scanners in the **artflow-studio/scanner** package have been tested and fixe
 - **Impact**: Critical - Scanner couldn't initialize without this fix
 
 ### 2. **LivewireScanner.php - Regex Pattern Fix**
-- **File**: `src/Scanners/LivewireScanner.php`
+- **File**: `src/laravel-securitys/LivewireScanner.php`
 - **Issue**: Incomplete regex pattern causing "missing terminating ] for character class" error
 - **Fix**: Fixed regex pattern from `/['\"]" . preg_quote($property, '/') . "['\"]\\s*=>\\s*['\"][^'\"]+['\"/` to `/['\"]" . preg_quote($property, '/') . "['\"]\\s*=>\\s*['\"][^'\"]+['\"]/`
 - **Line**: 109
@@ -112,7 +112,7 @@ All scanners in the **artflow-studio/scanner** package have been tested and fixe
 
 ## Conclusion
 
-The **artflow-studio/scanner** package is now **fully operational** and ready for production use. All 13 security scanners are working correctly, all report formats are generating properly, and the package successfully scans Laravel applications for security vulnerabilities.
+The **artflow-studio/laravel-security** package is now **fully operational** and ready for production use. All 13 security scanners are working correctly, all report formats are generating properly, and the package successfully scans Laravel applications for security vulnerabilities.
 
 ### Package Status: ✅ FULLY FUNCTIONAL
 

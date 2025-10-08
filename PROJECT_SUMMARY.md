@@ -2,7 +2,7 @@
 
 ## 📦 Package Overview
 
-**Name:** `artflow-studio/scanner`  
+**Name:** `artflow-studio/laravel-security`  
 **Version:** 1.0.0  
 **Type:** Laravel Security Package  
 **License:** MIT
@@ -196,7 +196,7 @@ docs/                 5 files   (~800 lines)
 
 ### Installation
 ```bash
-composer require artflow-studio/scanner --dev
+composer require artflow-studio/laravel-security --dev
 php artisan vendor:publish --tag=scanner-config
 ```
 

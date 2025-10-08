@@ -1,5 +1,5 @@
 {
-    "name": "artflow-studio/scanner",
+    "name": "artflow-studio/laravel-security",
     "description": "A comprehensive Laravel vulnerability scanner for detecting security issues in Laravel and Livewire applications",
     "type": "library",
     "keywords": [

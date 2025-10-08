@@ -48,7 +48,7 @@ php artisan scan:fix --dry-run
 ```bash
 php artisan scan:fix --backup
 ```
-- Creates backup in `storage/scanner-backups/`
+- Creates backup in `storage/laravel-security-backups/`
 - Shows preview before applying
 - Asks for confirmation
 - Displays progress
@@ -84,7 +84,7 @@ php artisan scan:report --format=html
 ```
 - Professional HTML output
 - Searchable and filterable
-- Saved to `storage/scanner-reports/`
+- Saved to `storage/laravel-security-reports/`
 
 ### JSON Export
 ```bash
@@ -282,12 +282,12 @@ After:  $query->whereRaw("name = $input"); // WARNING: Potential SQL injection r
 
 ### Scan Results
 - Console: Real-time display
-- HTML: `storage/scanner-reports/scan-{timestamp}.html`
-- JSON: `storage/scanner-reports/scan-{timestamp}.json`
-- Markdown: `storage/scanner-reports/scan-{timestamp}.md`
+- HTML: `storage/laravel-security-reports/scan-{timestamp}.html`
+- JSON: `storage/laravel-security-reports/scan-{timestamp}.json`
+- Markdown: `storage/laravel-security-reports/scan-{timestamp}.md`
 
 ### Backups
-- Location: `storage/scanner-backups/{timestamp}/`
+- Location: `storage/laravel-security-backups/{timestamp}/`
 - Contains: Original files before fixes
 - Retention: Manual cleanup required
 
@@ -339,7 +339,7 @@ After:  $query->whereRaw("name = $input"); // WARNING: Potential SQL injection r
 - Fix in batches by scanner type
 
 ### "Command not found"
-- Ensure package is installed: `composer require artflow-studio/scanner`
+- Ensure package is installed: `composer require artflow-studio/laravel-security`
 - Clear config cache: `php artisan config:clear`
 
 ### "No fixable issues found"

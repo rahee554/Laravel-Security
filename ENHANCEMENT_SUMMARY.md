@@ -1,7 +1,7 @@
 # Artflow Scanner - Enhancement Summary
 
 ## Overview
-This document summarizes all enhancements, fixes, and new features implemented for the artflow-studio/scanner package.
+This document summarizes all enhancements, fixes, and new features implemented for the artflow-studio/laravel-security package.
 
 **Date:** January 2024
 **Package Version:** 1.0.0
@@ -86,7 +86,7 @@ src/Fixers/SqlInjectionFixerStrategy.php           - SQL injection fixer
 ```
 
 **Files Modified:**
-- `src/ScannerServiceProvider.php` - Registered new command and service
+- `src/laravel-securityServiceProvider.php` - Registered new command and service
 
 **Features Implemented:**
 - `--dry-run`: Preview changes without applying
@@ -334,7 +334,7 @@ php artisan scan:fix --dry-run
 ### Apply Fixes with Backup
 ```bash
 php artisan scan:fix --backup
-# Creates backup in storage/scanner-backups/
+# Creates backup in storage/laravel-security-backups/
 # Applies fixes after confirmation
 # Shows progress and summary
 ```
@@ -364,7 +364,7 @@ php artisan scan:fix --backup
 ✅ **"test out all scanners"** - All 13 scanners tested successfully
 ✅ **"fix issues php artisan scan"** - Interactive menu fixed with numbered selection
 ✅ **"fix the complete scanner completely"** - All 5 critical bugs fixed
-✅ **"inside the package directory"** - All changes made only in vendor/artflow-studio/scanner/
+✅ **"inside the package directory"** - All changes made only in vendor/artflow-studio/laravel-security/
 ✅ **"dont do anything outside"** - No changes to main application
 ✅ **"Interactive version it is not working"** - Fixed with new menu system
 ✅ **"in the end show xss has number of errors and all"** - Type breakdown implemented

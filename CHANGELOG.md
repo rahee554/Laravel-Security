@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `artflow-studio/scanner` will be documented in this file.
+All notable changes to `artflow-studio/laravel-security` will be documented in this file.
 
 ## [1.0.0] - 2025-10-07
 

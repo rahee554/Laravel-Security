@@ -1,6 +1,6 @@
 # ✅ Artflow Scanner Package - Complete Test Report
 
-**Package**: artflow-studio/scanner  
+**Package**: artflow-studio/laravel-security  
 **Version**: 1.0.0  
 **Test Date**: October 7, 2025  
 **Status**: ✅ **FULLY FUNCTIONAL**
@@ -22,7 +22,7 @@ The Artflow Vulnerability Scanner package has been thoroughly tested, debugged, 
 - **Impact**: Critical - Required for AST parsing
 
 ### 2. Regex Pattern Correction ✅
-**File**: `src/Scanners/LivewireScanner.php` (Line 109)
+**File**: `src/laravel-securitys/LivewireScanner.php` (Line 109)
 - **Issue**: Incomplete character class in regex pattern
 - **Solution**: Fixed pattern closing bracket
 - **Impact**: High - Validation detection was broken
@@ -265,7 +265,7 @@ The scanner itself follows security best practices:
 
 ## ✅ Final Verdict
 
-The **artflow-studio/scanner** package is:
+The **artflow-studio/laravel-security** package is:
 - ✅ **Fully functional** - All features working
 - ✅ **Production ready** - Stable and reliable
 - ✅ **Well documented** - Easy to use

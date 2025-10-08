@@ -54,7 +54,7 @@ Want to add a new security scanner? Great! Here's how:
    Add it to `ScannerService::registerScanners()`
 
 3. **Add Configuration**
-   Update `config/scanner.php` with scanner-specific options
+   Update `config/laravel-security.php` with scanner-specific options
 
 4. **Create Tests**
    Add comprehensive tests for your scanner
@@ -66,7 +66,7 @@ Want to add a new security scanner? Great! Here's how:
 
 1. **Fork the Repository**
    ```bash
-   git clone https://github.com/artflow-studio/scanner.git
+   git clone https://github.com/artflow-studio/laravel-security.git
    cd scanner
    ```
 
@@ -97,7 +97,7 @@ Want to add a new security scanner? Great! Here's how:
 
 ```bash
 # Clone the repository
-git clone https://github.com/artflow-studio/scanner.git
+git clone https://github.com/artflow-studio/laravel-security.git
 cd scanner
 
 # Install dependencies

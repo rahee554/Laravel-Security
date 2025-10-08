@@ -3,7 +3,7 @@
 ## Project Overview
 A comprehensive Laravel package that scans Laravel and Livewire applications for security vulnerabilities, misconfigurations, and potential exploits.
 
-**Package Name:** `artflow-studio/scanner`
+**Package Name:** `artflow-studio/laravel-security`
 
 ## Core Requirements Analysis
 
@@ -553,7 +553,7 @@ Line: 42
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
- ⚠ Creating backup at: storage/scanner-backups/2024-01-15_143022/
+ ⚠ Creating backup at: storage/laravel-security-backups/2024-01-15_143022/
 
  ✓ Fixed 127 vulnerabilities
  ✓ Modified 43 files

@@ -1,8 +1,8 @@
 # 🔒 Artflow Vulnerability Scanner
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/artflow-studio/scanner.svg?style=flat-square)](https://packagist.org/packages/artflow-studio/scanner)
-[![Total Downloads](https://img.shields.io/packagist/dt/artflow-studio/scanner.svg?style=flat-square)](https://packagist.org/packages/artflow-studio/scanner)
-[![License](https://img.shields.io/packagist/l/artflow-studio/scanner.svg?style=flat-square)](https://packagist.org/packages/artflow-studio/scanner)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/artflow-studio/laravel-security.svg?style=flat-square)](https://packagist.org/packages/artflow-studio/laravel-security)
+[![Total Downloads](https://img.shields.io/packagist/dt/artflow-studio/laravel-security.svg?style=flat-square)](https://packagist.org/packages/artflow-studio/laravel-security)
+[![License](https://img.shields.io/packagist/l/artflow-studio/laravel-security.svg?style=flat-square)](https://packagist.org/packages/artflow-studio/laravel-security)
 
 **The Ultimate All-in-One Security Scanner for Laravel & Livewire Applications**
 
@@ -54,7 +54,7 @@ A comprehensive, enterprise-grade security vulnerability scanner that detects se
 Require the package via Composer:
 
 ```bash
-composer require artflow-studio/scanner --dev
+composer require artflow-studio/laravel-security --dev
 ```
 
 The package will automatically register its service provider.
@@ -65,7 +65,7 @@ The package will automatically register its service provider.
 php artisan vendor:publish --tag=scanner-config
 ```
 
-This creates `config/scanner.php` where you can customize the scanner behavior.
+This creates `config/laravel-security.php` where you can customize the scanner behavior.
 
 ## 🚀 Quick Start
 
@@ -302,7 +302,7 @@ php artisan vendor:publish --tag=scanner-config
 **Available Configuration Options:**
 
 ```php
-// config/scanner.php
+// config/laravel-security.php
 return [
     'paths' => [
         'scan' => ['app', 'routes', 'config'],
@@ -384,14 +384,14 @@ We welcome contributions! Areas where you can help:
 
 ## � Bug Reports & Feature Requests
 
-Found a bug or have an idea? [Open an issue](https://github.com/artflow-studio/scanner/issues)
+Found a bug or have an idea? [Open an issue](https://github.com/artflow-studio/laravel-security/issues)
 
 ## 📚 Documentation
 
-- [Full Documentation](https://github.com/artflow-studio/scanner/wiki)
-- [Scanner API Reference](https://github.com/artflow-studio/scanner/wiki/api)
-- [Custom Scanner Development](https://github.com/artflow-studio/scanner/wiki/custom-scanners)
-- [Auto-Fix Strategy Guide](https://github.com/artflow-studio/scanner/wiki/auto-fix)
+- [Full Documentation](https://github.com/artflow-studio/laravel-security/wiki)
+- [Scanner API Reference](https://github.com/artflow-studio/laravel-security/wiki/api)
+- [Custom Scanner Development](https://github.com/artflow-studio/laravel-security/wiki/custom-scanners)
+- [Auto-Fix Strategy Guide](https://github.com/artflow-studio/laravel-security/wiki/auto-fix)
 
 ## 🧪 Testing the Package
 
@@ -443,7 +443,7 @@ Special thanks to:
 **Secure your Laravel application today!**
 
 ```bash
-composer require artflow-studio/scanner --dev
+composer require artflow-studio/laravel-security --dev
 php artisan scan
 ```
 

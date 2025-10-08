@@ -25,7 +25,7 @@ class ScannerServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/scanner.php', 'scanner'
+            __DIR__.'/../config/laravel-security.php', 'scanner'
         );
 
         $this->app->singleton('scanner', function ($app) {
@@ -45,7 +45,7 @@ class ScannerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             // Publish configuration
             $this->publishes([
-                __DIR__.'/../config/scanner.php' => config_path('scanner.php'),
+                __DIR__.'/../config/laravel-security.php' => config_path('scanner.php'),
             ], 'scanner-config');
 
             // Register commands

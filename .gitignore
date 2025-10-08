@@ -21,7 +21,7 @@ Thumbs.db
 phpunit.xml
 
 # Reports
-/storage/scanner-reports/
+/storage/laravel-security-reports/
 
 security-report.*
 
